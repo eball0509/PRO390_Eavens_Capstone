@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 
     float rotationX = 0;
 
+    public InventoryObject inventory;
     public Camera playerCamera;
     public float walkSpeed = 5;
     public float runspeed = 10;
@@ -65,6 +66,16 @@ public class Player : MonoBehaviour
                 playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
                 transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        var item = other.GetComponent<Item>();
+        if(item)
+        {
+            inventory.AddItem(item.item, 1);
+            Destroy(other.gameObject);
         }
     }
 }
