@@ -29,7 +29,6 @@ public class Ui_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         iconRectTransform = icon.GetComponent<RectTransform>();
 
-        // 🆕 Add/Grab CanvasGroup for drag raycast handling
         iconCanvasGroup = icon.GetComponent<CanvasGroup>();
         if (iconCanvasGroup == null)
             iconCanvasGroup = icon.gameObject.AddComponent<CanvasGroup>();
