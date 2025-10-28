@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3718f23d388474b4582a72506ab52f19, type: 3}
+  m_Name: Rock
+  m_EditorClassIdentifier: Assembly-CSharp::MaterialObject
+  type: 1
+  icon: {fileID: 21300000, guid: 37fc26470cb49fc45af470c2048ff243, type: 3}
+  description: Stone, an upgrade to wood

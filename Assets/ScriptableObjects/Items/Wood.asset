@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3718f23d388474b4582a72506ab52f19, type: 3}
   m_Name: Wood
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
-  prefab: {fileID: 0}
   type: 1
+  icon: {fileID: 21300000, guid: a92239ba9dd3f2246bc5855ca4ddd39b, type: 3}
   description: 'Wood, the basic building material
 
 '

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Material Object", menuName = "Inventory System/Items/Material")]
-public class NewMonoBehaviourScript : ItemObject
+public class MaterialObject : ItemObject
 {
     private void Awake()
     {
