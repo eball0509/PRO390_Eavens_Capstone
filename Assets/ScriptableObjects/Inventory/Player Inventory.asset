@@ -13,54 +13,54 @@ MonoBehaviour:
   m_Name: Player Inventory
   m_EditorClassIdentifier: Assembly-CSharp::InventoryObject
   Container:
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 11400000, guid: 9da09be1218c1d64f9d2cffe5d69e252, type: 2}
-    amount: 10
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 11400000, guid: e4c4f40c113b7064cbf5e15f7a326bb2, type: 2}
-    amount: 5
-  - item: {fileID: 11400000, guid: 610f229c11dc2f045b222a48f2db26f2, type: 2}
-    amount: 5
   - item: {fileID: 11400000, guid: 614a779fb7004a844b2d08271cecbe91, type: 2}
     amount: 1
+  - item: {fileID: 11400000, guid: caf34166e2019dd47adc6493c5da128d, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: f7714363012eef34080fa252cfa625a4, type: 2}
+    amount: 1
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
   - item: {fileID: 0}
     amount: 0
   - item: {fileID: 0}
