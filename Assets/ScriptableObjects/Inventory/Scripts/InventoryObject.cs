@@ -56,6 +56,11 @@ public class InventoryObject : ScriptableObject
         OnInventoryChangedCallBack?.Invoke();
     }
 
+    public void NotifyChange()
+    {
+       OnInventoryChangedCallBack?.Invoke();
+    }
+
 }
 
 [System.Serializable]

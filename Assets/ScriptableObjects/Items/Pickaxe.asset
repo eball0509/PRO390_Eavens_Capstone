@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pickaxe
   m_EditorClassIdentifier: Assembly-CSharp::ToolObject
   type: 2
-  icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 21300000, guid: 25f0469cb4a76b44ebf4c8daf22f1941, type: 3}
   description: A pickaxe, helpful for collecting stone and metal
   damage: 3
   yieldMultiplier: 5
