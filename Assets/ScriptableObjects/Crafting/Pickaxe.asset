@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5560774f6689c6343a8c608272c37f4a, type: 3}
   m_Name: Pickaxe
   m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
-  ingredients: []
-  result: {fileID: 0}
+  ingredients:
+  - item: {fileID: 11400000, guid: 9da09be1218c1d64f9d2cffe5d69e252, type: 2}
+    amount: 6
+  - item: {fileID: 11400000, guid: 610f229c11dc2f045b222a48f2db26f2, type: 2}
+    amount: 9
+  result: {fileID: 11400000, guid: f7714363012eef34080fa252cfa625a4, type: 2}
   resultAmount: 1

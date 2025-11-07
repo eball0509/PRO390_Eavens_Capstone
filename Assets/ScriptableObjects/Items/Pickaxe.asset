@@ -17,3 +17,6 @@ MonoBehaviour:
   description: A pickaxe, helpful for collecting stone and metal
   damage: 3
   yieldMultiplier: 5
+  prefab: {fileID: 0}
+  holdPositionOffset: {x: 0, y: 0, z: 0}
+  holdRotationOffset: {x: 0, y: 0, z: 0}

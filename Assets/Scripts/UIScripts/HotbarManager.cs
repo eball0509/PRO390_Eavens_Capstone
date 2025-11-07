@@ -8,6 +8,7 @@ public class HotbarManager : MonoBehaviour
 
     [SerializeField] private Player player;
     [SerializeField] private InventoryObject playerInventory;
+    [SerializeField] private RectTransform highlight;
 
     [SerializeField] private List<Ui_ItemSlot> hotbarSlots = new List<Ui_ItemSlot>();
 
@@ -33,6 +34,11 @@ public class HotbarManager : MonoBehaviour
             {
                 SelectSlot(i);
             }
+        }
+
+        if (highlight != null && hotbarSlots.Count > 0)
+        {
+            highlight.position = Vector3.Lerp(highlight.position, hotbarSlots[currentSlot].transform.position, Time.deltaTime * 10f);
         }
     }
 
@@ -77,10 +83,24 @@ public class HotbarManager : MonoBehaviour
         Debug.Log($"Hotbar Tab Switched: Slot {index + 1} selected.");
 
         player.SetCurrentHotbarItem(currentSlot);
+
+        UpdateHighlight();
     }
 
     public List<Ui_ItemSlot> GetHotbarSlots()
     {
         return hotbarSlots;
+    }
+
+    private void UpdateHighlight()
+    {
+        for (int i = 0; i < hotbarSlots.Count; i++)
+        {
+            var borderImg = hotbarSlots[i].transform.Find("Border").GetComponent<UnityEngine.UI.Image>();
+            if (borderImg != null)
+            {
+                borderImg.color = (i == currentSlot) ? Color.yellow : Color.black;
+            }
+        }
     }
 }

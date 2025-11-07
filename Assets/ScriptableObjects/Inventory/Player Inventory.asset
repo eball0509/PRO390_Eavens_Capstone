@@ -15,10 +15,10 @@ MonoBehaviour:
   Container:
   - item: {fileID: 11400000, guid: 614a779fb7004a844b2d08271cecbe91, type: 2}
     amount: 1
-  - item: {fileID: 11400000, guid: caf34166e2019dd47adc6493c5da128d, type: 2}
-    amount: 1
-  - item: {fileID: 11400000, guid: f7714363012eef34080fa252cfa625a4, type: 2}
-    amount: 1
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
   - item: {fileID: 0}
     amount: 0
   - item: {fileID: 0}

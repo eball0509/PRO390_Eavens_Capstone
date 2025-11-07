@@ -17,3 +17,6 @@ MonoBehaviour:
   description: An axe, helpful for chopping trees
   damage: 3
   yieldMultiplier: 5
+  prefab: {fileID: 5818241264881310114, guid: 596946adce049204eb665838fa0015dd, type: 3}
+  holdPositionOffset: {x: 0, y: 0, z: 0}
+  holdRotationOffset: {x: 90, y: 165, z: 0}

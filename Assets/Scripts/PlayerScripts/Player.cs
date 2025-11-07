@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
 
     public InventoryObject inventory;
     public Camera playerCamera;
+    public Transform holdPoint;
     public float walkSpeed = 5;
     public float runspeed = 10;
     public float jumpHeight = 7;
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour
     public KeyCode harvestKey = KeyCode.Mouse0;
 
     private ItemObject currentHotbarItem;
+    private GameObject currentHeldItem;
     private float nextHitTime = 0;
 
 
@@ -88,10 +90,12 @@ public class Player : MonoBehaviour
         if (inventory == null || slotIndex < 0 || slotIndex >= inventory.Container.Count)
         {
             currentHotbarItem = null;
+            UpdateHeldItem();
             return;
         }
 
         currentHotbarItem = inventory.Container[slotIndex].item;
+        UpdateHeldItem();
     }
 
     public void TryHarvest()
@@ -112,6 +116,38 @@ public class Player : MonoBehaviour
             if (harvestable != null)
             {
                 harvestable.Harvest(this, currentTool);
+            }
+        }
+    }
+
+    public void UpdateHeldItem()
+    {
+        // Remove previous item
+        if (currentHeldItem != null)
+        {
+            Destroy(currentHeldItem);
+            currentHeldItem = null;
+        }
+
+        if (currentHotbarItem == null) return;
+
+        GameObject prefabToHold = null;
+
+        if (currentHotbarItem is ToolObject tool)
+        {
+            prefabToHold = tool.prefab;
+        }
+
+        if (prefabToHold != null)
+        {
+            currentHeldItem = Instantiate(prefabToHold, holdPoint);
+            currentHeldItem.transform.localPosition = Vector3.zero;
+            currentHeldItem.transform.localRotation = Quaternion.identity;
+
+            if (currentHotbarItem is ToolObject t)
+            {
+                currentHeldItem.transform.localPosition += t.holdPositionOffset;
+                currentHeldItem.transform.localRotation *= Quaternion.Euler(t.holdRotationOffset);
             }
         }
     }
