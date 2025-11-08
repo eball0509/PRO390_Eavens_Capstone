@@ -6,6 +6,11 @@ public class CraftSystem : MonoBehaviour
     {
         InventoryObject inventory = player.inventory;
 
+        if (!HasIngredients(inventory, recipe))
+        {
+            return false;
+        }
+
         foreach (var ingredient in recipe.ingredients)
         {
             RemoveItem(inventory, ingredient.item, ingredient.amount);
