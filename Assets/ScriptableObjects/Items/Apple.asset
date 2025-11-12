@@ -17,5 +17,5 @@ MonoBehaviour:
   description: 'Oooh, a delicious apple
 
 '
-  healthRestore: 3
+  healthRestore: 1
   hungerRestore: 5

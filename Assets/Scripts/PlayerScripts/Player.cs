@@ -5,14 +5,14 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     CharacterController characterController;
-
     Vector3 moveDirection = Vector3.zero;
-
     float rotationX = 0;
 
     public InventoryObject inventory;
     public Camera playerCamera;
     public Transform holdPoint;
+
+    [Header("Player Movement Settings")]
     public float walkSpeed = 5;
     public float runspeed = 10;
     public float jumpHeight = 7;
@@ -21,10 +21,22 @@ public class Player : MonoBehaviour
     public float lookXLimit = 45;
     public bool canMove = true;
 
-    [Header("Harvesting Information")]
+    [Header("Harvesting Settings")]
     public float harvestRange = 1f;
     public float hitCooldown = 0.5f;
     public KeyCode harvestKey = KeyCode.Mouse0;
+
+    [Header("Health and Hunger Stats")]
+    public float currentHealth = 100;
+    public float maxHealth = 100;
+    public float currentHunger = 100;
+    public float maxHunger = 100;
+
+    [Header("Hunger Settings")]
+    public float hungerDecreaseRate = 2.5f;
+    public float hungerTickDelay = 15f;
+    public float hungerDamageRate = 5;
+    private float hungerTimer = 0f;
 
     private ItemObject currentHotbarItem;
     private GameObject currentHeldItem;
@@ -81,8 +93,18 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(harvestKey) && Time.time >= nextHitTime)
         {
             nextHitTime = Time.time + hitCooldown;
-            TryHarvest();
+
+            if (currentHotbarItem is FoodObject fooditem)
+            {
+                TryEat(fooditem);
+            }
+            else
+            {
+                TryHarvest();
+            }
         }
+
+        HandleHunger();
     }
 
     public void SetCurrentHotbarItem(int slotIndex)
@@ -151,4 +173,57 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+    private void HandleHunger()
+    {
+        hungerTimer += Time.deltaTime;
+
+        if (hungerTimer >= hungerTickDelay)
+        {
+            hungerTimer = 0;
+            ModifyHunger(-hungerDecreaseRate);
+        }
+
+        if (currentHunger <= 0)
+        {
+            ModifyHealth(-hungerDamageRate * Time.deltaTime);
+        }
+        
+    }
+
+    public void ModifyHealth(float amount)
+    {
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void ModifyHunger(float amount)
+    {
+        currentHunger = Mathf.Clamp(currentHunger + amount, 0, maxHunger);
+    }
+
+    private void Die()
+    {
+        canMove = false;
+    }
+
+    public void TryEat(FoodObject food)
+    {
+        if (currentHunger < maxHunger)
+        {
+            ModifyHunger(food.hungerRestore);
+
+            if (food.healthRestore > 0)
+            {
+                ModifyHealth(food.healthRestore);
+            }
+
+            inventory.RemoveItem(food, 1);
+        }
+    }
+
 }

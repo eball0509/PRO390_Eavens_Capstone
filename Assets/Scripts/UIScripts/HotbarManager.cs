@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HotbarManager : MonoBehaviour
 {
@@ -9,6 +9,8 @@ public class HotbarManager : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private InventoryObject playerInventory;
     [SerializeField] private RectTransform highlight;
+    [SerializeField] private Slider healthBar;
+    [SerializeField] private Slider hungerBar;
 
     [SerializeField] private List<Ui_ItemSlot> hotbarSlots = new List<Ui_ItemSlot>();
 
@@ -24,9 +26,29 @@ public class HotbarManager : MonoBehaviour
             RefreshHotbar();
             SelectSlot(0);
         }
+
+        if (healthBar != null)
+        {
+            healthBar.minValue = 0;
+            healthBar.maxValue = player.maxHealth;
+        }
+        if (hungerBar != null)
+        {
+            hungerBar.minValue = 0;
+            hungerBar.maxValue = player.maxHunger;
+        }
     }
 
+
     private void Update()
+    {
+        HandleHotbarInput();
+        UpdateHighlight();
+        UpdateStatBars();
+        
+    }
+
+    private void HandleHotbarInput()
     {
         for (int i = 0; i < TOTAL_HOTBAR_SLOTS; i++)
         {
@@ -35,11 +57,6 @@ public class HotbarManager : MonoBehaviour
                 SelectSlot(i);
             }
         }
-
-        if (highlight != null && hotbarSlots.Count > 0)
-        {
-            highlight.position = Vector3.Lerp(highlight.position, hotbarSlots[currentSlot].transform.position, Time.deltaTime * 10f);
-        }
     }
 
     private void InitializeHotbar()
@@ -47,7 +64,6 @@ public class HotbarManager : MonoBehaviour
         for(int i = 0;i < hotbarSlots.Count ;i++)
         {
             hotbarSlots[i].slotIndex = i;
-
             hotbarSlots[i].player = player;
             hotbarSlots[i].assignedInventory = playerInventory;
         }
@@ -94,6 +110,11 @@ public class HotbarManager : MonoBehaviour
 
     private void UpdateHighlight()
     {
+        if (highlight != null && hotbarSlots.Count > 0)
+        {
+            highlight.position = Vector3.Lerp(highlight.position, hotbarSlots[currentSlot].transform.position, Time.deltaTime * 10f);
+        }
+
         for (int i = 0; i < hotbarSlots.Count; i++)
         {
             var borderImg = hotbarSlots[i].transform.Find("Border").GetComponent<UnityEngine.UI.Image>();
@@ -101,6 +122,21 @@ public class HotbarManager : MonoBehaviour
             {
                 borderImg.color = (i == currentSlot) ? Color.yellow : Color.black;
             }
+        }
+    }
+
+    private void UpdateStatBars()
+    {
+        if (player == null) return;
+
+        if (healthBar != null)
+        {
+            healthBar.value = Mathf.Lerp(healthBar.value, player.currentHealth, Time.deltaTime * 8f);
+        }
+
+        if (hungerBar != null)
+        {
+            hungerBar.value = Mathf.Lerp(hungerBar.value, player.currentHunger, Time.deltaTime * 8f);
         }
     }
 }
