@@ -26,11 +26,13 @@ public class Player : MonoBehaviour
     public float hitCooldown = 0.5f;
     public KeyCode harvestKey = KeyCode.Mouse0;
 
-    [Header("Health and Hunger Stats")]
+    [Header("Player Stats")]
     public float currentHealth = 100;
     public float maxHealth = 100;
     public float currentHunger = 100;
     public float maxHunger = 100;
+    public float maxWeight = 200;
+    public float currentWeight = 0;
 
     [Header("Hunger Settings")]
     public float hungerDecreaseRate = 2.5f;
@@ -64,7 +66,7 @@ public class Player : MonoBehaviour
             float moveDirectionY = moveDirection.y;
             moveDirection = (forward * cursorSpeedX) + (right * cursorSpeedY);
 
-            if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
+            if (Input.GetKey(KeyCode.Space) && canMove && characterController.isGrounded)
             {
                 moveDirection.y = jumpHeight;
             }
@@ -90,7 +92,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(harvestKey) && Time.time >= nextHitTime)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= nextHitTime)
         {
             nextHitTime = Time.time + hitCooldown;
 
@@ -133,6 +135,23 @@ public class Player : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, activeRange))
         {
+
+            AnimalHealth animalHealth = hit.collider.GetComponent<AnimalHealth>();
+            if (animalHealth != null && animalHealth.currentHealth > 0)
+            {
+                animalHealth.TakeDamage(currentTool.damage);
+                Debug.Log($"Dealt {currentTool.damage} damage to {animalHealth.name}");
+                return;
+            }
+
+            AnimalHarvestable deadAnimal = hit.collider.GetComponent<AnimalHarvestable>();
+            if (deadAnimal != null)
+            {
+                deadAnimal.Harvest(this, currentTool);
+                Debug.Log($"Harvested {deadAnimal.name}");
+                return;
+            }
+
             Harvestable harvestable = hit.collider.GetComponent<Harvestable>();
 
             if (harvestable != null)

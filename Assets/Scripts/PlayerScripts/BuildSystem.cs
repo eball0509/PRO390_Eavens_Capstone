@@ -4,15 +4,15 @@ using System.Linq;
 public class BuildSystem : MonoBehaviour
 {
     [Header("Build Settings")]
-    public GameObject[] buildPrefabs;       // Prefabs you can build
-    public float gridSize = 1f;             // Grid snapping
-    public float previewYOffset = 0.1f;     // Offset for preview
-    public float snapRadius = 1.0f;         // How far to look for nearby objects
-    public float snapThreshold = 0.2f;      // Minimum distance to snap
-    public float rotationStep = 90f;        // Rotate preview 90 degrees per press
+    public GameObject[] buildPrefabs;
+    public float gridSize = 1f;
+    public float previewYOffset = 0.1f;
+    public float snapRadius = 1.0f;
+    public float snapThreshold = 0.2f;
+    public float rotationStep = 90f;
 
     [Header("Layers")]
-    public LayerMask buildableLayer;        // Floors, walls, already placed objects
+    public LayerMask buildableLayer;
 
     private GameObject currentPreview;
     private int currentPrefabIndex = 0;
@@ -101,7 +101,7 @@ public class BuildSystem : MonoBehaviour
 
     private void HandlePlacement()
     {
-        if (Input.GetMouseButtonDown(0) && currentPreview != null)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && currentPreview != null)
         {
             GameObject placedObject = Instantiate(currentPreview, currentPreview.transform.position, currentPreview.transform.rotation);
             SetPreviewMaterial(placedObject, false);

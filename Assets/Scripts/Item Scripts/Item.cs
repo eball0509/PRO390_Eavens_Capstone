@@ -24,6 +24,8 @@ public class ItemPickup : MonoBehaviour
     {
         player.inventory.AddItem(item, 1);
 
+        PickupTip.Instance.Hide();
+
         Destroy(gameObject);
     }
 
@@ -35,6 +37,8 @@ public class ItemPickup : MonoBehaviour
         {
             player = p;
             canPickUp = true;
+
+            PickupTip.Instance.Show($"Press E to pickup");
         }
     }
 
@@ -44,6 +48,8 @@ public class ItemPickup : MonoBehaviour
         {
             canPickUp = false;
             player = null;
+
+            PickupTip.Instance.Hide();
         }
     }
 }
