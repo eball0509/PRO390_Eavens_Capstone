@@ -1,3 +1,4 @@
+using UnityEditor.Rendering.Universal.ShaderGraph;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -11,6 +12,9 @@ public class Player : MonoBehaviour
     public InventoryObject inventory;
     public Camera playerCamera;
     public Transform holdPoint;
+    public Animator axeAnimator;
+    public Animator pickaxeAnimator;
+    public AudioSource source;
 
     [Header("Player Movement Settings")]
     public float walkSpeed = 5;
@@ -43,6 +47,7 @@ public class Player : MonoBehaviour
     private ItemObject currentHotbarItem;
     private GameObject currentHeldItem;
     private float nextHitTime = 0;
+    private Animator heldItemAnimator;
 
 
     void Start()
@@ -100,12 +105,17 @@ public class Player : MonoBehaviour
             {
                 TryEat(fooditem);
             }
-            else
+            else if (currentHotbarItem is ToolObject toolItem)
             {
                 TryHarvest();
+
+                if (heldItemAnimator != null)
+                {
+                    heldItemAnimator.SetTrigger(toolItem.useAnimationTrigger);
+                    Debug.Log("Trigger Sent");
+                }
             }
         }
-
         HandleHunger();
     }
 
@@ -135,6 +145,7 @@ public class Player : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, activeRange))
         {
+            PlayHitSound(hit.collider, currentTool);
 
             AnimalHealth animalHealth = hit.collider.GetComponent<AnimalHealth>();
             if (animalHealth != null && animalHealth.currentHealth > 0)
@@ -182,8 +193,10 @@ public class Player : MonoBehaviour
         if (prefabToHold != null)
         {
             currentHeldItem = Instantiate(prefabToHold, holdPoint);
+
             currentHeldItem.transform.localPosition = Vector3.zero;
             currentHeldItem.transform.localRotation = Quaternion.identity;
+            heldItemAnimator = currentHeldItem.GetComponentInChildren<Animator>();
 
             if (currentHotbarItem is ToolObject t)
             {
@@ -243,6 +256,42 @@ public class Player : MonoBehaviour
 
             inventory.RemoveItem(food, 1);
         }
+    }
+
+    private void PlayHitSound(Collider col, ToolObject tool)
+    {
+        if (tool == null)
+        {
+            return;
+        }
+
+        HitMaterials mat = col.GetComponent<HitMaterials>();
+        HitMaterial materialType = mat != null ? mat.material : HitMaterial.Default;
+
+        AudioClip[] clips = null;
+
+        switch (materialType)
+        {
+            case HitMaterial.Wood:
+                clips = tool.woodHitSounds;
+                break;
+            case HitMaterial.Stone:
+                clips = tool.stoneHitSounds;
+                break;
+            case HitMaterial.Flesh:
+                clips = tool.fleshHitSounds;
+                break;
+            case HitMaterial.Default:
+                clips = tool.defaultHitSounds;
+                break;
+
+        }
+
+        if (clips != null)
+        {
+            source.PlayOneShot(clips[Random.Range(0, clips.Length)]);
+        }
+
     }
 
 }

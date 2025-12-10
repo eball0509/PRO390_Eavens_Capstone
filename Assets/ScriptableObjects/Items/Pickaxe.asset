@@ -17,6 +17,14 @@ MonoBehaviour:
   description: A pickaxe, helpful for collecting stone and metal
   damage: 3
   yieldMultiplier: 5
-  prefab: {fileID: 0}
-  holdPositionOffset: {x: 0, y: 0, z: 0}
+  prefab: {fileID: 66894388564111074, guid: 219b3b1446d005d478b344c28ffd22a6, type: 3}
+  useAnimationTrigger: Swing
+  holdPositionOffset: {x: 2, y: -8, z: 0}
   holdRotationOffset: {x: 0, y: 0, z: 0}
+  woodHitSounds:
+  - {fileID: 8300000, guid: 523be0cf71a6c3d4c8056e5d4927c069, type: 3}
+  stoneHitSounds:
+  - {fileID: 8300000, guid: 5594f4b1e684d604aae7ccdea5d777a7, type: 3}
+  fleshHitSounds:
+  - {fileID: 8300000, guid: d2799452ae61b544685e993bbc218645, type: 3}
+  defaultHitSounds: []

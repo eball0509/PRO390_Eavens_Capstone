@@ -26,6 +26,7 @@ public class AnimalAI : MonoBehaviour
 
     private float nextAttackTime = 0;
     private Vector3 patrolPoint;
+    private Animator animator;
 
     private enum State
     {
@@ -45,6 +46,7 @@ public class AnimalAI : MonoBehaviour
 
         SetNewPatrolPoint();
         currentState = State.Patrol;
+        animator = GetComponent<Animator>();
     }
 
     private void Update()

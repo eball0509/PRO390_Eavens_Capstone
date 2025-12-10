@@ -63,6 +63,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: dec71bb4e66221144b5db0af9e0f39d5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6291582935747455994}
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: dec71bb4e66221144b5db0af9e0f39d5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 751551564389444114}
   m_SourcePrefab: {fileID: 100100000, guid: dec71bb4e66221144b5db0af9e0f39d5, type: 3}
 --- !u!1 &6052081990277080795 stripped
 GameObject:
@@ -85,3 +88,16 @@ MonoBehaviour:
   amtToGivePerHit: 3
   currentHealth: 15
   maxHealth: 15
+--- !u!114 &751551564389444114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6052081990277080795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d8216df98c6e59479fbf3fd00495bc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitMaterials
+  material: 0
