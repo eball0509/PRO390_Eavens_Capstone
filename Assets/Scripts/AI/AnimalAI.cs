@@ -16,6 +16,7 @@ public class AnimalAI : MonoBehaviour
     public float attackRange = 2;
     public float attackDamage = 10;
     public float attackCooldown = 1;
+    public float idleTime = 2;
 
     public float patrolRadius = 10;
     public float patrolPointTolerance = 1;
@@ -27,6 +28,8 @@ public class AnimalAI : MonoBehaviour
     private float nextAttackTime = 0;
     private Vector3 patrolPoint;
     private Animator animator;
+    private float idleTimer = 0f;
+    private bool isIdling = false;
 
     private enum State
     {
@@ -57,6 +60,7 @@ public class AnimalAI : MonoBehaviour
         {
             case State.Patrol:
                 Patrol();
+                AnimateMovement(agent.velocity.magnitude);
                 if (animalType == AnimalType.Docile && distance < fleeRange)
                 {
                     currentState = State.Flee;
@@ -68,6 +72,7 @@ public class AnimalAI : MonoBehaviour
                 break;
             case State.Chase:
                 Chase();
+                AnimateMovement(agent.velocity.magnitude);
                 if (distance < attackRange)
                 {
                     currentState = State.Attack;
@@ -79,6 +84,7 @@ public class AnimalAI : MonoBehaviour
                 break;
             case State.Flee:
                 Flee();
+                AnimateMovement(agent.velocity.magnitude);
                 if (distance > fleeRange * 1.5f)
                 {
                     currentState = State.Patrol;
@@ -86,6 +92,7 @@ public class AnimalAI : MonoBehaviour
                 break;
             case State.Attack:
                 Attack(distance);
+                AnimateMovement(0);
                 if (distance > attackRange)
                 {
                     currentState = State.Chase;
@@ -97,10 +104,28 @@ public class AnimalAI : MonoBehaviour
 
     private void Patrol()
     {
+        if (isIdling)
+        {
+
+            idleTimer -= Time.deltaTime;
+
+            agent.SetDestination(transform.position);
+
+            if (idleTimer <= 0)
+            {
+                isIdling = false;
+                SetNewPatrolPoint();
+            }
+            return;
+        }
+
         if (Vector3.Distance(transform.position, patrolPoint) < patrolPointTolerance)
         {
-            SetNewPatrolPoint();
+            isIdling = true;
+            idleTimer = idleTime;
+            return;
         }
+
         agent.SetDestination(patrolPoint);
     }
 
@@ -137,5 +162,22 @@ public class AnimalAI : MonoBehaviour
         NavMesh.SamplePosition(randomDirection, out hit, patrolRadius, NavMesh.AllAreas);
 
         patrolPoint = hit.position;
+    }
+
+    private void AnimateMovement(float speed)
+    {
+        if (animator == null)
+        {
+            return;
+        }
+
+        if (speed > 0.1)
+        {
+            animator.SetBool("IsMoving", true);
+        }
+        else
+        {
+            animator.SetBool("IsMoving", false);
+        }
     }
 }

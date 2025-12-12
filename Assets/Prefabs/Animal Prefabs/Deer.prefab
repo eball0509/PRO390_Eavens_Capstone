@@ -73,16 +73,44 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 785054047861989165, guid: 303d9560b1a0e58499eb70417be2e820, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 785054047861989165, guid: 303d9560b1a0e58499eb70417be2e820, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 785054047861989165, guid: 303d9560b1a0e58499eb70417be2e820, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 785054047861989165, guid: 303d9560b1a0e58499eb70417be2e820, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9994723
+      objectReference: {fileID: 0}
+    - target: {fileID: 785054047861989165, guid: 303d9560b1a0e58499eb70417be2e820, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 785054047861989165, guid: 303d9560b1a0e58499eb70417be2e820, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 785054047861989165, guid: 303d9560b1a0e58499eb70417be2e820, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.032483518
+      objectReference: {fileID: 0}
+    - target: {fileID: 785054047861989165, guid: 303d9560b1a0e58499eb70417be2e820, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -0.033979442
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 785054047861989165, guid: 303d9560b1a0e58499eb70417be2e820, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -0.28354618
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 785054047861989165, guid: 303d9560b1a0e58499eb70417be2e820, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -3.7732759
+      value: -3.723
       objectReference: {fileID: 0}
     - target: {fileID: 889689830262397668, guid: 303d9560b1a0e58499eb70417be2e820, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -122,7 +150,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1047755721396717109, guid: 303d9560b1a0e58499eb70417be2e820, type: 3}
       propertyPath: m_Name
-      value: Deer Variant
+      value: Deer
       objectReference: {fileID: 0}
     - target: {fileID: 1489236185646215085, guid: 303d9560b1a0e58499eb70417be2e820, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -587,6 +615,7 @@ MonoBehaviour:
   attackRange: 2
   attackDamage: 10
   attackCooldown: 1
+  idleTime: 2
   patrolRadius: 10
   patrolPointTolerance: 1
 --- !u!114 &3261397153119657838

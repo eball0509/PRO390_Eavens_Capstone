@@ -1,4 +1,3 @@
-using UnityEditor.Rendering.Universal.ShaderGraph;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -43,6 +42,10 @@ public class Player : MonoBehaviour
     public float hungerTickDelay = 15f;
     public float hungerDamageRate = 5;
     private float hungerTimer = 0f;
+
+    [Header("Hit Particles")]
+    public GameObject particlePrefab;
+    public float particleLifetime = 1;
 
     private ItemObject currentHotbarItem;
     private GameObject currentHeldItem;
@@ -145,6 +148,7 @@ public class Player : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, activeRange))
         {
+            
             PlayHitSound(hit.collider, currentTool);
 
             AnimalHealth animalHealth = hit.collider.GetComponent<AnimalHealth>();
@@ -167,6 +171,15 @@ public class Player : MonoBehaviour
 
             if (harvestable != null)
             {
+                if (particlePrefab != null)
+                {
+                    GameObject p = Instantiate(particlePrefab,
+                        hit.point,
+                        Quaternion.LookRotation(hit.normal)
+                        );
+
+                    Destroy(p, particleLifetime);
+                }
                 harvestable.Harvest(this, currentTool);
             }
         }
