@@ -106,6 +106,7 @@ public class AnimalAI : MonoBehaviour
     {
         if (isIdling)
         {
+            agent.isStopped = true;
 
             idleTimer -= Time.deltaTime;
 
@@ -114,10 +115,13 @@ public class AnimalAI : MonoBehaviour
             if (idleTimer <= 0)
             {
                 isIdling = false;
+                agent.isStopped = false;
                 SetNewPatrolPoint();
             }
             return;
         }
+
+        agent.isStopped = false;
 
         if (Vector3.Distance(transform.position, patrolPoint) < patrolPointTolerance)
         {
@@ -131,11 +135,14 @@ public class AnimalAI : MonoBehaviour
 
     private void Chase()
     {
+        agent.isStopped = false;
         agent.SetDestination(player.position);
     }
 
     private void Flee()
     {
+        agent.isStopped = false;
+
         Vector3 direction = (transform.position - player.position).normalized;
         Vector3 fleePosition = transform.position + direction * patrolRadius;
 
@@ -144,7 +151,7 @@ public class AnimalAI : MonoBehaviour
 
     private void Attack(float distance)
     {
-        agent.SetDestination(transform.position);
+        agent.isStopped = true;
 
         if (distance <= attackRange && Time.time >= nextAttackTime)
         {
