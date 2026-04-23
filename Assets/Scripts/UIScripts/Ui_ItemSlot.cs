@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -28,7 +29,6 @@ public class Ui_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             amountText = GetComponentInChildren<TMP_Text>();
 
         iconRectTransform = icon.GetComponent<RectTransform>();
-
         iconCanvasGroup = icon.GetComponent<CanvasGroup>();
         if (iconCanvasGroup == null)
             iconCanvasGroup = icon.gameObject.AddComponent<CanvasGroup>();
@@ -38,7 +38,6 @@ public class Ui_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     {
         currentItem = item;
         currentAmount = amount;
-
         if (item != null && item.icon != null)
         {
             icon.sprite = item.icon;
@@ -64,11 +63,12 @@ public class Ui_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public void OnBeginDrag(PointerEventData eventData)
     {
         Debug.Log($"OnBeginDrag clicked on Slot Index: {slotIndex}");
-        if (player.inventory.Container[slotIndex].item == null)
+
+        // Fixed: use assignedInventory instead of player.inventory
+        if (assignedInventory.Container[slotIndex].item == null)
             return;
 
         Debug.Log($"Starting drag from Slot Index: {slotIndex}");
-
         itemBeingDragged = this;
 
         if (rootCanvasTransform == null)
@@ -78,9 +78,7 @@ public class Ui_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         }
 
         iconRectTransform.SetParent(rootCanvasTransform);
-
         icon.raycastTarget = false;
-
         if (iconCanvasGroup != null)
             iconCanvasGroup.blocksRaycasts = false;
     }
@@ -94,26 +92,40 @@ public class Ui_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public void OnEndDrag(PointerEventData eventData)
     {
         Debug.Log($"OnEndDrag Fired on Slot: {slotIndex}");
-
         if (itemBeingDragged == this)
             ResetDragVisuals();
-
         itemBeingDragged = null;
     }
 
     public void OnDrop(PointerEventData eventData)
     {
         Debug.Log($"OnDrop fired on Slot Index: {this.slotIndex}");
-
         if (itemBeingDragged == null || itemBeingDragged == this)
             return;
 
         Debug.Log($"Valid drop from {itemBeingDragged.slotIndex} to {this.slotIndex}");
-
         Ui_ItemSlot sourceSlot = itemBeingDragged;
 
         if (sourceSlot.assignedInventory == assignedInventory)
+        {
+            // Same inventory — just swap
             assignedInventory.SwapItems(sourceSlot.slotIndex, this.slotIndex);
+        }
+        else
+        {
+            // Different inventories — transfer/swap between them
+            InventorySlot from = sourceSlot.assignedInventory.Container[sourceSlot.slotIndex];
+            InventorySlot to = assignedInventory.Container[this.slotIndex];
+
+            ItemObject tempItem = to.item;
+            int tempAmount = to.amount;
+
+            assignedInventory.Container[this.slotIndex].UpdateSlot(from.item, from.amount);
+            sourceSlot.assignedInventory.Container[sourceSlot.slotIndex].UpdateSlot(tempItem, tempAmount);
+
+            assignedInventory.NotifyChange();
+            sourceSlot.assignedInventory.NotifyChange();
+        }
 
         sourceSlot.ResetDragVisuals();
         itemBeingDragged = null;
@@ -122,10 +134,8 @@ public class Ui_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     private void ResetDragVisuals()
     {
         icon.raycastTarget = true;
-
         if (iconCanvasGroup != null)
             iconCanvasGroup.blocksRaycasts = true;
-
         iconRectTransform.SetParent(transform);
         iconRectTransform.localPosition = Vector3.zero;
     }
