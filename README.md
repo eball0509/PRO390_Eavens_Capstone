@@ -24,3 +24,7 @@
 3. Select the cloned folder.
 4. Open the project and load the main scene from the `Assets` folder.
 5. Press **Play** to run the game in the editor.
+
+---
+
+### Full Build is OUT OF DATE | I will get that fixed and updated
